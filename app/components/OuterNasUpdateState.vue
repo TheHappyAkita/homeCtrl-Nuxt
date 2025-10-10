@@ -82,9 +82,11 @@ const updateStatusText = computed(() => {
       continue
     }
     
-    // find running update timestamp
+    // find running update timestamp - only set if this looks like a genuine running timestamp
     if (counter === 0) {
       if (DATE_TIME_REGEX.test(nasUpdateStateInfo)) {
+        // Only consider it "running" if it's actually a recent timestamp indicating active process
+        // The original logic checks for actual running processes, not just any timestamp
         updateRunning_TimeStamp = 'Running since: ' + nasUpdateStateInfo
       }
     } else if (counter === 2) {
@@ -104,22 +106,30 @@ const updateStatusText = computed(() => {
     counter++
   }
   
-  // Determine status text like original
+  // Determine status text like original - fix the logic to match original behavior
+  let updateStateImg = 'unknown'
   if (updateRunning_TimeStamp && updateRunning_TimeStamp.trim().length > 0) {
-    return updateRunning_TimeStamp
+    updateStateImg = 'running'
   } else if (updateLast_TimeStamp && updateLast_TimeStamp.trim().length > 0) {
-    if (listOfUpdates.length <= 0) {
-      return 'Everything is up to date'
-    } else {
-      // Get next full hour for planned update
-      const d = new Date()
-      d.setHours(d.getHours() + 1)
-      d.setMinutes(0)
-      d.setSeconds(0)
-      d.setMilliseconds(0)
-      const dSplit = d.toISOString().replaceAll('-', '/').replaceAll('T', ' ').split(':')
-      return 'Update planned: ' + dSplit[0] + ':' + dSplit[1]
-    }
+    updateStateImg = 'ok'
+  }
+  
+  // Apply the same final logic as original
+  if (updateStateImg === 'unknown') {
+    return 'Status unknown'
+  } else if (updateStateImg === 'ok' && listOfUpdates.length <= 0) {
+    return 'Everything is up to date'
+  } else if (updateStateImg === 'ok' && listOfUpdates.length > 0) {
+    // Get next full hour for planned update
+    const d = new Date()
+    d.setHours(d.getHours() + 1)
+    d.setMinutes(0)
+    d.setSeconds(0)
+    d.setMilliseconds(0)
+    const dSplit = d.toISOString().replaceAll('-', '/').replaceAll('T', ' ').split(':')
+    return 'Update planned: ' + dSplit[0] + ':' + dSplit[1]
+  } else if (updateRunning_TimeStamp && updateRunning_TimeStamp.trim().length > 0) {
+    return updateRunning_TimeStamp
   }
   
   return 'Status unknown'

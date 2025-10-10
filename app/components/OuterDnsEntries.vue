@@ -8,7 +8,7 @@
           <span class="imgInfo" @click="showModal(entry)"></span>
           <div class="dnsListElementHeader">
             <a :href="entry.finalHref" target="_blank" rel="noopener noreferrer">
-              <span :class="`img${entry.type}`" class="imgDefault"></span>
+              <img :class="`icon dns_entries img${entry.type}`" />
               <div class="dnsListElementContent">{{ entry.name }}</div>
             </a>
           </div>
