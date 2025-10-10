@@ -5,12 +5,26 @@
       <div v-if="error" class="detailListElement detailListElementNegative">{{ error }}</div>
       <ul v-else class="dnsList">
         <li v-for="entry in dnsEntries" :key="entry.name" class="dnsListElement">
+          <span class="imgInfo" @click="showModal(entry)"></span>
           <div class="dnsListElementHeader">
-            <span :class="`img${entry.type}`" class="imgDefault"></span>
-            <div class="dnsListElementContent">{{ entry.name }}</div>
+            <a :href="entry.finalHref" target="_blank" rel="noopener noreferrer">
+              <span :class="`img${entry.type}`" class="imgDefault"></span>
+              <div class="dnsListElementContent">{{ entry.name }}</div>
+            </a>
           </div>
         </li>
       </ul>
+      <!-- Modal for DNS entry details -->
+      <div v-if="selectedEntry" class="modal-overlay" @click="hideModal">
+        <div class="modal-content" @click.stop>
+          <h1>{{ selectedEntry.name }}</h1>
+          <h2>DNS</h2>
+          <p>{{ selectedEntry.dns }}</p>
+          <h2>IP</h2>
+          <p>{{ selectedEntry.ip }}</p>
+          <button @click="hideModal">OK</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -21,12 +35,16 @@ import { ref, onMounted, computed } from 'vue'
 const loading = ref(false)
 const error = ref('')
 const text = ref('')
+const selectedEntry = ref<DnsEntry | null>(null)
 
 interface DnsEntry {
   name: string
   type: string
   isHidden: boolean
   order: number
+  dns: string
+  ip: string
+  finalHref: string
 }
 
 // Filter configuration based on original project
@@ -63,7 +81,29 @@ const dnsEntries = computed<DnsEntry[]>(() => {
   const entries = text.value.split('<br>')
     .filter(line => line.trim())
     .map(line => {
-      const name = line.trim()
+      const dnsSplit = line.trim().split(/\s+/)
+      if (dnsSplit.length <= 0) {
+        return null
+      }
+
+      // Extract IP (first token)
+      const ip = dnsSplit.shift() || ''
+      if (!ip || ip.length <= 0 || !ip.startsWith('192.168')) {
+        return null
+      }
+
+      // Extract DNS name (second token)
+      const dns = dnsSplit.shift() || ''
+      
+      // Handle the rest as description string
+      const rest = dnsSplit.join(' ')
+      let name = rest
+      if (!name || name.length <= 0) {
+        name = dns
+      }
+      if (!name || name.length <= 0) {
+        name = ip
+      }
       
       // Determine type based on name patterns (matching original logic)
       let type = 'Default'
@@ -84,11 +124,29 @@ const dnsEntries = computed<DnsEntry[]>(() => {
       // Determine order priority
       const orderIndex = entryOrder.findIndex(orderName => name.includes(orderName))
       const order = orderIndex >= 0 ? orderIndex : entryOrder.length
+
+      // Construct href (using DNS by default, can be extended with specific rules)
+      const dnsHref = `http://${dns}`
+      const ipHref = `http://${ip}`
+      let finalHref = dnsHref
       
-      return { name, type, isHidden, order }
+      // Apply href extensions based on original logic
+      const hrefExtensions: { [key: string]: string } = {
+        'akitapi4': '/admin',
+        'akitaCtrl': ':5555',
+        'nextcloud': ':8055',
+        'nextcloud2': ':8055',
+        'jdownloader': ':5800'
+      }
+      
+      if (hrefExtensions[name]) {
+        finalHref += hrefExtensions[name]
+      }
+      
+      return { name, type, isHidden, order, dns, ip, finalHref }
     })
-    // Filter out hidden entries
-    .filter(entry => !entry.isHidden)
+    // Filter out null entries and hidden entries
+    .filter((entry): entry is DnsEntry => entry !== null && !entry.isHidden)
     // Sort by order priority
     .sort((a, b) => a.order - b.order)
   
@@ -109,8 +167,68 @@ async function load() {
 }
 
 onMounted(load)
+
+function showModal(entry: DnsEntry) {
+  selectedEntry.value = entry
+}
+
+function hideModal() {
+  selectedEntry.value = null
+}
 </script>
 
 <style scoped>
 @import "~/assets/DnsEntries.css";
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h1 {
+  margin-top: 0;
+  color: var(--color_tile_head);
+}
+
+.modal-content h2 {
+  color: var(--color_grey5_label);
+  font-size: var(--font_medium_font-size-14);
+  margin-bottom: 0.5rem;
+}
+
+.modal-content p {
+  color: var(--color_midnight_black);
+  margin-bottom: 1rem;
+}
+
+.modal-content button {
+  background-color: var(--color_highlight);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-content button:hover {
+  opacity: 0.8;
+}
 </style>

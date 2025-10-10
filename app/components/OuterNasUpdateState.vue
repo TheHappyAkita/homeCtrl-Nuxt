@@ -47,11 +47,12 @@ const text = ref('')
 const updateState = computed(() => {
   if (!text.value) return 'Unknown'
   
-  const content = text.value.toLowerCase()
-  if (content.includes('error') || content.includes('failed')) return 'Error'
-  if (content.includes('running') || content.includes('updating')) return 'Running'
-  if (content.includes('planned') || content.includes('scheduled')) return 'Planned'
-  if (content.includes('up to date') || content.includes('no updates')) return 'Ok'
+  const statusText = updateStatusText.value.toLowerCase()
+  
+  if (statusText.includes('running since:')) return 'Running'
+  if (statusText.includes('update planned:')) return 'Planned'
+  if (statusText.includes('everything is up to date')) return 'Ok'
+  if (statusText.includes('error') || statusText.includes('failed')) return 'Error'
   
   return 'Unknown'
 })
@@ -59,9 +60,69 @@ const updateState = computed(() => {
 const updateStatusText = computed(() => {
   if (!text.value) return 'Checking for updates...'
   
-  // Extract first line as status
-  const lines = text.value.split('\n')
-  return lines[0] || 'Status unknown'
+  const lines = text.value.split('<br>').filter(line => line.trim())
+  if (lines.length === 0) return 'Status unknown'
+  
+  const DATE_TIME_REGEX = /^.*[0-9]{4}\/[0-9]{2}\/[0-9]{2}.*[0-9]{2}:[0-9]{2}.*$/
+  
+  let updateRunning_TimeStamp = ''
+  let updateLast_TimeStamp = ''
+  const listOfUpdates: string[] = []
+  
+  // Parse the response similar to original logic
+  let counter = 0
+  for (let nasUpdateStateInfo of lines) {
+    if (!nasUpdateStateInfo || nasUpdateStateInfo.trim().length <= 0) {
+      continue
+    }
+    if (nasUpdateStateInfo.indexOf('No such file') > -1) {
+      continue
+    }
+    if (nasUpdateStateInfo.indexOf('no route to') > -1) {
+      continue
+    }
+    
+    // find running update timestamp
+    if (counter === 0) {
+      if (DATE_TIME_REGEX.test(nasUpdateStateInfo)) {
+        updateRunning_TimeStamp = 'Running since: ' + nasUpdateStateInfo
+      }
+    } else if (counter === 2) {
+      if (DATE_TIME_REGEX.test(nasUpdateStateInfo)) {
+        updateLast_TimeStamp = 'Last Update: ' + nasUpdateStateInfo
+      }
+    } else if (counter > 0 && (!updateLast_TimeStamp || updateLast_TimeStamp.trim().length <= 0)) {
+      if (DATE_TIME_REGEX.test(nasUpdateStateInfo)) {
+        updateLast_TimeStamp = 'Last Update: ' + nasUpdateStateInfo
+      } else {
+        listOfUpdates.push(nasUpdateStateInfo)
+      }
+    } else {
+      listOfUpdates.push(nasUpdateStateInfo)
+    }
+    
+    counter++
+  }
+  
+  // Determine status text like original
+  if (updateRunning_TimeStamp && updateRunning_TimeStamp.trim().length > 0) {
+    return updateRunning_TimeStamp
+  } else if (updateLast_TimeStamp && updateLast_TimeStamp.trim().length > 0) {
+    if (listOfUpdates.length <= 0) {
+      return 'Everything is up to date'
+    } else {
+      // Get next full hour for planned update
+      const d = new Date()
+      d.setHours(d.getHours() + 1)
+      d.setMinutes(0)
+      d.setSeconds(0)
+      d.setMilliseconds(0)
+      const dSplit = d.toISOString().replaceAll('-', '/').replaceAll('T', ' ').split(':')
+      return 'Update planned: ' + dSplit[0] + ':' + dSplit[1]
+    }
+  }
+  
+  return 'Status unknown'
 })
 
 const lastChecked = computed(() => {
