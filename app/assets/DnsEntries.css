@@ -79,53 +79,87 @@
 
 .imgDefault {
     min-height: 36px;
+    width: 36px;
+    height: 36px;
 }
 
 .imgAkita {
     content: var(--img_dns_akita);
+    width: 36px;
+    height: 36px;
+    display: block;
 }
 
 .imgAudio {
     content: var(--img_dns_audio);
+    width: 36px;
+    height: 36px;
+    display: block;
 }
 
 .imgBooks {
     content: var(--img_dns_books);
+    width: 36px;
+    height: 36px;
+    display: block;
 }
 
 .imgHome {
     content: var(--img_dns_home);
+    width: 36px;
+    height: 36px;
+    display: block;
 }
 
 .imgInfo {
     content: var(--img_dns_info);
-
+    width: 16px;
+    height: 16px;
+    display: block;
     position: absolute;
     margin-left: 120px;
 }
 
 .imgMusic {
     content: var(--img_dns_music);
+    width: 36px;
+    height: 36px;
+    display: block;
 }
 
 .imgNas {
     content: var(--img_dns_nas);
+    width: 36px;
+    height: 36px;
+    display: block;
 }
 
 .imgNextcloud {
     content: var(--img_dns_nextcloud);
+    width: 36px;
+    height: 36px;
+    display: block;
 }
 
 .imgJDownloader {
     content: var(--img_dns_jdownloader);
+    width: 36px;
+    height: 36px;
+    display: block;
 }
 
 .imgFritz {
     content: var(--img_dns_fritz);
+    width: 36px;
+    height: 36px;
+    display: block;
 }
 
 .imgRouter {
     content: var(--img_dns_router);
+    width: 36px;
+    height: 36px;
+    display: block;
 }
 
 

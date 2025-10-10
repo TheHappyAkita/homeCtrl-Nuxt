@@ -2,7 +2,7 @@
   <div class="devState">
     <div :class="onlineState">
       <div class="table">
-        <span class="header headerInTable">DEV State</span>
+        <span class="header headerInTable">Akita's Den</span>
         <div class="tableCol1" :class="{ 'tableCol1OnlineBG': isOnline }">
           {{ isOnline ? 'Online' : 'Offline' }}
         </div>
