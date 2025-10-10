@@ -5,13 +5,11 @@
       <div v-if="error" class="detailListElement detailListElementNegative">{{ error }}</div>
       <ul v-else class="dnsList">
         <li v-for="entry in dnsEntries" :key="entry.name" class="dnsListElement">
-          <span class="imgInfo" @click="showModal(entry)"></span>
-          <div class="dnsListElementHeader">
-            <a :href="entry.finalHref" target="_blank" rel="noopener noreferrer">
-              <img :class="`icon dns_entries img${entry.type}`" />
+          <img class="imgInfo" @click="showModal(entry)" alt="info icon"/>
+            <a :href="entry.finalHref" target="_blank" rel="noopener noreferrer" class="dnsListElementHeader">
+              <img :class="`icon dns_entries img${entry.type}`" alt="dns entry icon" />
               <div class="dnsListElementContent">{{ entry.name }}</div>
             </a>
-          </div>
         </li>
       </ul>
       <!-- Modal for DNS entry details -->

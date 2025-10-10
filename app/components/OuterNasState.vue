@@ -3,7 +3,7 @@
     <div :class="onlineState">
       <div class="table">
         <span class="header headerInTable">NAS State</span>
-        <div class="tableCol1" :class="{ 'tableCol1BG': ConnectionState.online === onlineState }">
+        <div class="tableCol1" :class="{ 'tableCol1OnlineBG': ConnectionState.online === onlineState }">
           {{ ConnectionState.online === onlineState ? 'Online' : 'Offline' }}
         </div>
         <button
@@ -24,7 +24,7 @@
         </button>
       </div>
       <ul v-if="textLines.length > 0 && !error" class="detailList detailListHover">
-          <li v-for="(line, index) in textLines" :key="index" class="detailListElement">{{ line }}</li>
+        <li v-for="(line, index) in textLines" :key="index" :class="line.cssClass">{{ line.text }}</li>
       </ul>
       <div v-if="error" class="detailList">
         <div class="detailListElement detailListElementNegative">{{ error }}</div>
@@ -50,7 +50,23 @@ const onlineState = ref (ConnectionState.unknown);
 
 const textLines = computed(() => {
   if (!text.value) return []
-  return text.value.split('<br>').filter(line => line.trim())
+  return text.value.split('<br>').filter(line => line.trim()).map(line => {
+    let cssClass = 'detailListElement'
+
+    // Apply highlighting based on ping result content (matching original logic)
+    if (line.indexOf('transmitted') > -1) {
+      cssClass += ' detailListElementPositive'
+    } else if (line.indexOf('received') > -1) {
+      cssClass += ' detailListElementInactive'
+    } else if (line.indexOf('errors') > -1 || line.indexOf('packet loss') > -1) {
+      cssClass += ' detailListElementNegative'
+    }
+
+    return {
+      text: line,
+      cssClass
+    }
+  })
 })
 
 async function load() {
