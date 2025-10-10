@@ -105,7 +105,7 @@ async function execShutdownNas() {
 
 async function execWolNas() {
   try {
-    await $fetch('/api/nas/wol', {
+    await $fetch('/api/nas', {
       method: 'POST',
       body: { action: 'wol' }
     });
