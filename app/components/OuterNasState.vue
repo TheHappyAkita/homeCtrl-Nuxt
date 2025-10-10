@@ -57,7 +57,7 @@ async function load() {
   loading.value = true
   error.value = ''
   try {
-    const res = await $fetch<string>('/api/nas/update')
+    const res = await $fetch<string>('/api/nas')
     text.value = res || ''
     if (isOffline(res)) {
       onlineState.value = ConnectionState.offline;

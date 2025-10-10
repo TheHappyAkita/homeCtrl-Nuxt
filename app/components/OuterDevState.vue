@@ -132,7 +132,7 @@ async function load() {
   loading.value = true
   error.value = ''
   try {
-    const res = await $fetch<string>('/api/dev/update')
+    const res = await $fetch<string>('/api/dev')
     stateText.value = res || ''
     if (isOffline(res)) {
       onlineState.value = ConnectionState.offline
