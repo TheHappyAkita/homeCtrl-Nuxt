@@ -142,9 +142,51 @@ const lastChecked = computed(() => {
 const updatesList = computed(() => {
   if (!text.value) return []
   
-  // Extract update items from text (skip first line which is status)
-  const lines = text.value.split('\n').slice(1)
-  return lines.filter(line => line.trim()).map(line => line.trim())
+  const lines = text.value.split('<br>').filter(line => line.trim())
+  if (lines.length === 0) return []
+  
+  const DATE_TIME_REGEX = /^.*[0-9]{4}\/[0-9]{2}\/[0-9]{2}.*[0-9]{2}:[0-9]{2}.*$/
+  
+  let updateRunning_TimeStamp = ''
+  let updateLast_TimeStamp = ''
+  const listOfUpdates: string[] = []
+  
+  // Parse the response using the same logic as updateStatusText
+  let counter = 0
+  for (let nasUpdateStateInfo of lines) {
+    if (!nasUpdateStateInfo || nasUpdateStateInfo.trim().length <= 0) {
+      continue
+    }
+    if (nasUpdateStateInfo.indexOf('No such file') > -1) {
+      continue
+    }
+    if (nasUpdateStateInfo.indexOf('no route to') > -1) {
+      continue
+    }
+    
+    // find running update timestamp
+    if (counter === 0) {
+      if (DATE_TIME_REGEX.test(nasUpdateStateInfo)) {
+        updateRunning_TimeStamp = 'Running since: ' + nasUpdateStateInfo
+      }
+    } else if (counter === 2) {
+      if (DATE_TIME_REGEX.test(nasUpdateStateInfo)) {
+        updateLast_TimeStamp = 'Last Update: ' + nasUpdateStateInfo
+      }
+    } else if (counter > 0 && (!updateLast_TimeStamp || updateLast_TimeStamp.trim().length <= 0)) {
+      if (DATE_TIME_REGEX.test(nasUpdateStateInfo)) {
+        updateLast_TimeStamp = 'Last Update: ' + nasUpdateStateInfo
+      } else {
+        listOfUpdates.push(nasUpdateStateInfo)
+      }
+    } else {
+      listOfUpdates.push(nasUpdateStateInfo)
+    }
+    
+    counter++
+  }
+  
+  return listOfUpdates
 })
 
 async function load() {
