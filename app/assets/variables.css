@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
+
+@font-face {
+	font-family: 'Chiller';
+	src: url('/fonts/CHILLER.woff') format('woff'),
+	url('/fonts/CHILLER.TTF') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+:root {
+  /* Colors */
+  --color_main-bg: #F0F5F7;
+  --color_header_bg: #6c04db;
+
+  --color_snowhite: #FFFFFF;
+  --color_white_e6: #FFFFFFE6;
+  --color_midnight_black: #0E1537;
+  --color_highlight: #6800D8;
+  --color_secondary: #A9B4C2;
+  --color_grey2_head: #E5ECF1;
+  --color_grey3_tile: #E6E9F1;
+  --color_grey4_inactive: #A9B4C2;
+  --color_grey5_label: #6E859E;
+  --color_grey7_modalBack: #43526B80;
+  --color_positiv: #0DBC7B;
+  --color_negativ: #D3004F;
+
+  --color_tile_head: #1C1C59;
+
+  /* Fonts */
+  --font_header_font-size-50: 50px;
+  --font_header_font-family: Chiller, sans-serif;
+  --font_header_font-weight: 400; /* regular */
+
+  --font_bold_font-size-18: 18px;
+  --font_bold_font-family: Roboto, sans-serif;
+  --font_bold_font-weight: 700; /* bold */
+
+  --font_medium_font-size-16: 16px;
+  --font_medium_font-size-14: 14px;
+  --font_medium_font-family: Roboto, sans-serif;
+  --font_medium_font-weight: 500; /* medium */
+
+  --font_regular_font-size-14: 14px;
+  --font_regular_font-family: Roboto, sans-serif;
+  --font_regular_font-weight: 400; /* regular */
+
+  --font_normal_font-size-12: 12px;
+  --font_normal_font-family: Roboto, sans-serif;
+  --font_normal_font-weight: 300; /* light / normal */
+
+  /* Images */
+  --img_wakeUp: url("/icons/power_ico.svg");
+  --img_wakeUp_grey: url("/icons/power_ico_grey.svg");
+  --img_wakeUp_purple: url("/icons/power_ico_purple.svg");
+
+  --img_error: url("/icons/error_ico.svg");
+  --img_ok: url("/icons/ok_ico.svg");
+  --img_unknown: url("/icons/unknown_ico.svg");
+  --img_planned: url("/icons/planed_ico.svg");
+
+  --img_dns_akita: url("/icons/dnsEntries/akita_ico.svg");
+  --img_dns_audio: url("/icons/dnsEntries/audio_ico.svg");
+  --img_dns_books: url("/icons/dnsEntries/books_ico.svg");
+  --img_dns_home: url("/icons/dnsEntries/home_ico.svg");
+  --img_dns_info: url("/icons/dnsEntries/info_ico.svg");
+  --img_dns_music: url("/icons/dnsEntries/music_ico.svg");
+  --img_dns_nas: url("/icons/dnsEntries/nas_ico.svg");
+  --img_dns_nextcloud: url("/icons/dnsEntries/nextcloud_ico.svg");
+  --img_dns_fritz: url("/icons/dnsEntries/fritz_ico.svg");
+  --img_dns_jdownloader: url("/icons/dnsEntries/jdownloader_ico.svg");
+  --img_dns_router: url("/icons/dnsEntries/router_ico.svg");
+}

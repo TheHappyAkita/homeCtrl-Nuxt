@@ -1,0 +1,134 @@
+.dnsEntries {
+    min-height: 72px;
+    height: auto;
+}
+
+.spinner_container {
+
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.loaded {
+
+}
+
+.header {
+    font-size: var(--font_bold_font-size-18);
+    font-family: var(--font_bold_font-family);
+    font-weight: var(--font_bold_font-weight);
+    color: var(--color_tile_head);
+}
+
+.dnsList {
+    list-style-type: none;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding-left: 0;
+    align-items: flex-start;
+    gap: 17px;
+}
+
+.dnsListElement {
+    background-color: var(--color_white_e6);
+
+    min-width: 163px;
+    width: 163px;
+    max-width: 163px;
+    min-height: 110px;
+    height: 110px;
+    max-height: 110px;
+
+    margin-bottom: 16px;
+
+    color: var(--color_midnight_black);
+    font-size: var(--font_medium_font-size-16);
+    font-family: var(--font_medium_font-family);
+    font-weight: var(--font_medium_font-weight);
+
+    padding-left: 16px;
+    padding-right: 8px;
+    padding-top: 8px;
+    padding-bottom: 26px;
+
+    border-radius: 8px;
+    border-color: var(--color_grey3_tile);
+}
+
+.dnsListElementHidden {
+    display: none !important;
+}
+
+.dnsListElementHeader {
+    display: grid;
+    gap: 14px;
+    justify-items: center;
+    align-content: space-around;
+
+    margin-top: 10px;
+}
+
+.dnsListElementContent {
+}
+
+.imgDefault {
+    min-height: 36px;
+}
+
+.imgAkita {
+    content: var(--img_dns_akita);
+}
+
+.imgAudio {
+    content: var(--img_dns_audio);
+}
+
+.imgBooks {
+    content: var(--img_dns_books);
+}
+
+.imgHome {
+    content: var(--img_dns_home);
+}
+
+.imgInfo {
+    content: var(--img_dns_info);
+
+    position: absolute;
+    margin-left: 120px;
+}
+
+.imgMusic {
+    content: var(--img_dns_music);
+}
+
+.imgNas {
+    content: var(--img_dns_nas);
+}
+
+.imgNextcloud {
+    content: var(--img_dns_nextcloud);
+}
+
+.imgJDownloader {
+    content: var(--img_dns_jdownloader);
+}
+
+.imgFritz {
+    content: var(--img_dns_fritz);
+}
+
+.imgRouter {
+    content: var(--img_dns_router);
+}
+
+
+
+
+

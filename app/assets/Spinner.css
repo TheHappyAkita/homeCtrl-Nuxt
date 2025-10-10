@@ -1,0 +1,16 @@
+.spinner {
+  thickness: 140 !important;
+  speed: 100 !important;
+  color: var(--color_highlight) !important;
+  secondaryColor: var(--color_secondary) !important;
+}
+
+.spinner_normal {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.spinner_small {
+  width: 20px !important;
+  height: 20px !important;
+}

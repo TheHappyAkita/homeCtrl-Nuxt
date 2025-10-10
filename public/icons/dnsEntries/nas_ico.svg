@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="34.018" viewBox="0 0 36 34.018">
+  <g id="nas_ico" transform="translate(0.395 0.395)">
+    <g id="Gruppe_19770" data-name="Gruppe 19770" transform="translate(-0.395 -0.395)">
+      <g id="Gruppe_19754" data-name="Gruppe 19754" transform="translate(0 0.386)">
+        <path id="Linie_1882" data-name="Linie 1882" d="M4,.957H-.021A.979.979,0,0,1-1-.021.979.979,0,0,1-.021-1H4a.979.979,0,0,1,.979.979A.979.979,0,0,1,4,.957Z" transform="translate(1 31.403)" fill="#6800d8"/>
+        <path id="Linie_1883" data-name="Linie 1883" d="M4,.957H-.021A.979.979,0,0,1-1-.021.979.979,0,0,1-.021-1H4a.979.979,0,0,1,.979.979A.979.979,0,0,1,4,.957Z" transform="translate(9.851 31.403)" fill="#6800d8"/>
+        <path id="Linie_1884" data-name="Linie 1884" d="M3.679.957h-3.7A.979.979,0,0,1-1-.021.979.979,0,0,1-.021-1h3.7a.979.979,0,0,1,.979.979A.979.979,0,0,1,3.679.957Z" transform="translate(23.204 31.403)" fill="#6800d8"/>
+        <path id="Linie_1885" data-name="Linie 1885" d="M3.679.957h-3.7A.979.979,0,0,1-1-.021.979.979,0,0,1-.021-1h3.7a.979.979,0,0,1,.979.979A.979.979,0,0,1,3.679.957Z" transform="translate(31.342 31.403)" fill="#6800d8"/>
+        <rect id="Rechteck_28430" data-name="Rechteck 28430" width="35.227" height="33.632" transform="translate(0.386)" fill="none"/>
+      </g>
+      <path id="Linie_1886" data-name="Linie 1886" d="M-.011,4.434A.489.489,0,0,1-.5,3.945V-.011A.489.489,0,0,1-.011-.5a.489.489,0,0,1,.489.489V3.945A.489.489,0,0,1-.011,4.434Z" transform="translate(18.663 26.877)" fill="#6800d8"/>
+      <rect id="Rechteck_28448" data-name="Rechteck 28448" width="32" height="10" transform="translate(2 14.009)" fill="#ece2f9"/>
+      <g id="Gruppe_19756" data-name="Gruppe 19756" transform="translate(1.064)">
+        <path id="Rechteck_28431" data-name="Rechteck 28431" d="M-.021-1H31.952a.979.979,0,0,1,.979.979V9.452a.979.979,0,0,1-.979.979H-.021A.979.979,0,0,1-1,9.452V-.021A.979.979,0,0,1-.021-1Zm31,1.957H.957V8.474H30.974Z" transform="translate(1 1)" fill="#6800d8"/>
+        <path id="Rechteck_28432" data-name="Rechteck 28432" d="M-.021-1H31.952a.979.979,0,0,1,.979.979V9.452a.979.979,0,0,1-.979.979H-.021A.979.979,0,0,1-1,9.452V-.021A.979.979,0,0,1-.021-1Zm31,1.957H.957V8.474H30.974Z" transform="translate(1 14.026)" fill="#6800d8"/>
+        <circle id="Ellipse_9825" data-name="Ellipse 9825" cx="1.957" cy="1.957" r="1.957" transform="translate(25.851 16.583)" fill="#6800d8"/>
+        <circle id="Ellipse_9830" data-name="Ellipse 9830" cx="1.957" cy="1.957" r="1.957" transform="translate(25.851 3.759)" fill="#6800d8"/>
+        <circle id="Ellipse_9831" data-name="Ellipse 9831" cx="1.957" cy="1.957" r="1.957" transform="translate(15.631 29.189)" fill="#6800d8"/>
+      </g>
+    </g>
+  </g>
+</svg>
