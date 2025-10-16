@@ -12,9 +12,6 @@
     border-color: var(--color_grey3_tile);
 }
 
-.spinner_container {
-}
-
 .header {
     font-size: var(--font_bold_font-size-18);
     font-family: var(--font_bold_font-family);

@@ -1,16 +1,27 @@
-.spinner {
-  thickness: 140 !important;
-  speed: 100 !important;
-  color: var(--color_highlight) !important;
-  secondaryColor: var(--color_secondary) !important;
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-.spinner_normal {
-  width: 40px !important;
-  height: 40px !important;
+.app-spinner {
+  border-radius: 50%;
+  border: 3px solid var(--color_secondary, #e3e3e3);
+  border-top: 3px solid var(--color_highlight, #007bff);
+  animation: spin 1s linear infinite;
+  display: inline-block;
 }
 
-.spinner_small {
-  width: 20px !important;
-  height: 20px !important;
+.app-spinner-normal {
+  width: 40px;
+  height: 40px;
+}
+
+.app-spinner-small {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
 }

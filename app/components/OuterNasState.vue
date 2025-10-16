@@ -6,22 +6,27 @@
         <div class="tableCol1" :class="{ 'tableCol1OnlineBG': ConnectionState.online === onlineState }">
           {{ ConnectionState.online === onlineState ? 'Online' : 'Offline' }}
         </div>
-        <button
-            v-if="ConnectionState.online === onlineState"
-            class="tableCol2"
-            @click="execShutdownNas"
-        >
-          <span class="imgShutDown"></span>
-          <span class="btShutDown">Shut Down</span>
-        </button>
-        <button
-            v-else
-            class="tableCol2"
-            @click="execWolNas"
-        >
-          <span class="imgWakeUp"></span>
-          <span class="btWakeUp">Wake Up</span>
-        </button>
+        <template v-if="loading">
+          <AppSpinner :size="SpinnerSize.small"/>
+        </template>
+        <template v-else>
+          <button
+              v-if="ConnectionState.online === onlineState"
+              class="tableCol2"
+              @click="execShutdownNas"
+          >
+            <span class="imgShutDown"></span>
+            <span class="btShutDown">Shut Down</span>
+          </button>
+          <button
+              v-else
+              class="tableCol2"
+              @click="execWolNas"
+          >
+            <span class="imgWakeUp"></span>
+            <span class="btWakeUp">Wake Up</span>
+          </button>
+        </template>
       </div>
       <ul v-if="textLines.length > 0 && !error" class="detailList detailListHover">
         <li v-for="(line, index) in textLines" :key="index" :class="line.cssClass">{{ line.text }}</li>
@@ -34,8 +39,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import {ref, onMounted, computed} from 'vue'
 import {isOffline} from "~/utils/detectors";
+import AppSpinner from './AppSpinner.vue'
+import {SpinnerSize} from "~/utils/SpinnerSize";
 
 const loading = ref(false)
 const error = ref('')
@@ -46,7 +53,8 @@ enum ConnectionState {
   online = "online",
   offline = "offline",
 }
-const onlineState = ref (ConnectionState.unknown);
+
+const onlineState = ref(ConnectionState.unknown);
 
 const textLines = computed(() => {
   if (!text.value) return []
@@ -56,9 +64,11 @@ const textLines = computed(() => {
     // Apply highlighting based on ping result content (matching original logic)
     if (line.indexOf('transmitted') > -1) {
       cssClass += ' detailListElementPositive'
-    } else if (line.indexOf('received') > -1) {
+    }
+    else if (line.indexOf('received') > -1) {
       cssClass += ' detailListElementInactive'
-    } else if (line.indexOf('errors') > -1 || line.indexOf('packet loss') > -1) {
+    }
+    else if (line.indexOf('errors') > -1 || line.indexOf('packet loss') > -1) {
       cssClass += ' detailListElementNegative'
     }
 
@@ -81,10 +91,12 @@ async function load() {
     else {
       onlineState.value = ConnectionState.online;
     }
-  } catch (e: any) {
+  }
+  catch (e: any) {
     error.value = e?.message || 'Failed to load';
     onlineState.value = ConnectionState.unknown;
-  } finally {
+  }
+  finally {
     loading.value = false;
   }
 }
@@ -95,10 +107,11 @@ async function execShutdownNas() {
   try {
     await $fetch('/api/nas/shutdown', {
       method: 'POST',
-      body: { action: 'shutdown' }
+      body: {action: 'shutdown'}
     });
     await load(); // Refresh state after shutdown
-  } catch (e: any) {
+  }
+  catch (e: any) {
     error.value = e?.message || 'Failed to shutdown NAS';
   }
 }
@@ -107,10 +120,11 @@ async function execWolNas() {
   try {
     await $fetch('/api/nas', {
       method: 'POST',
-      body: { action: 'wol' }
+      body: {action: 'wol'}
     });
     await load(); // Refresh state after WOL
-  } catch (e: any) {
+  }
+  catch (e: any) {
     error.value = e?.message || 'Failed to wake up NAS';
   }
 }
@@ -118,4 +132,12 @@ async function execWolNas() {
 
 <style scoped>
 @import "~/assets/NasState.css";
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+  padding: 2rem;
+}
 </style>
