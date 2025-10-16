@@ -7,7 +7,9 @@
     <template v-else>
       <div v-if="text && !error" class="content">
         <div class="contentUpdateState">
-          <div class="contentUpdateStateImg" :class="`contentUpdateStateImg_${updateState}`"></div>
+          <div class="contentUpdateStateImg" :class="`contentUpdateStateImg_${updateState}`">
+            <AppSpinner v-if="updateState === 'Running'" :size="SpinnerSize.normal"/>
+          </div>
           <div class="contentUpdateStateRightWrapper">
             <div class="contentUpdateStateUpdRun" :class="`contentUpdateStateTxt_${updateState}`">
               {{ updateStatusText }}
