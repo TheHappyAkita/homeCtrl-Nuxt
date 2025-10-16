@@ -78,15 +78,16 @@ const updateStatusText = computed(() => {
 
   // Parse the response similar to original logic
   let counter = 0
-  for (let nasUpdateStateInfo of lines) {
+  for (let counter=0; counter < lines.length; counter++) {
+    const nasUpdateStateInfo = lines[counter]
     if (!nasUpdateStateInfo || nasUpdateStateInfo.trim().length <= 0) {
-      continue
+      continue;
     }
     if (nasUpdateStateInfo.indexOf('No such file') > -1) {
-      continue
+      continue;
     }
     if (nasUpdateStateInfo.indexOf('no route to') > -1) {
-      continue
+      continue;
     }
 
     // find running update timestamp - only set if this looks like a genuine running timestamp
