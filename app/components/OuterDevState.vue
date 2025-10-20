@@ -31,7 +31,7 @@
     </div>
     <!--div v-if="servicesList.length > 0"-->
     <!--div class="detailListElement">Services:</div-->
-    <ul class="serviceList" v-if="servicesList.length > 0">
+    <ul class="serviceList" v-if="servicesList.length > 0 && isOnline === true">
       <li v-for="(service, index) in servicesList" :key="index">
         <a v-if="service.isLink" :href="service.url" target="_blank" rel="noopener noreferrer">
           {{ service.name }}
