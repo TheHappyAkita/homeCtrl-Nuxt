@@ -200,7 +200,7 @@ const updatesList = computed(() => {
         updateLast_TimeStamp = 'Last Update: ' + nasUpdateStateInfo
       }
       else {
-        listOfUpdates.push(nasUpdateStateInfo)
+        listOfUpdates.push(...nasUpdateStateInfo.split(' '))
       }
     }
     else {
