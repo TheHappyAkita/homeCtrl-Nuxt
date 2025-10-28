@@ -160,7 +160,7 @@ const lastChecked = computed(() => {
 const updatesList = computed(() => {
   if (!text.value) return []
 
-  const lines = text.value.split('<br>').join(' ').split(' ').filter(line => line.trim())
+  const lines = text.value.split('<br>').filter(line => line.trim())
   if (lines.length === 0) return []
 
   const DATE_TIME_REGEX = /^.*[0-9]{4}\/[0-9]{2}\/[0-9]{2}.*[0-9]{2}:[0-9]{2}.*$/
@@ -204,7 +204,7 @@ const updatesList = computed(() => {
       }
     }
     else {
-      listOfUpdates.push(nasUpdateStateInfo)
+      listOfUpdates.push(...nasUpdateStateInfo.split(' '))
     }
 
     counter++
